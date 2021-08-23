@@ -14,6 +14,7 @@ static inline bool flush_coherent_icache(void)
 	 * prefetched instructions from the ifetch buffers. We also need a sync
 	 * before the icbi to order the the actual stores to memory that might
 	 * have modified instructions with the icbi.
+	 * ICBI instruction has been taken care of
 	 */
 	if (cpu_has_feature(CPU_FTR_COHERENT_ICACHE)) {
 		mb(); /* sync */
@@ -222,6 +223,8 @@ void copy_user_page(void *vto, void *vfrom, unsigned long vaddr,
 
 	flush_dcache_page(pg);
 }
+
+//Function to clear icache of user page
 
 void flush_icache_user_page(struct vm_area_struct *vma, struct page *page,
 			     unsigned long addr, int len)
